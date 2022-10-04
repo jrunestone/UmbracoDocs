@@ -1,6 +1,6 @@
 ---
 versionFrom: 9.0.0
-versionTo: 10.0.0
+versionTo: 10.2.1
 ---
 
 # Authenticating the Umbraco backoffice with Azure Active Directory credentials
@@ -77,8 +77,13 @@ You need to install the `Microsoft.AspNetCore.Authentication.MicrosoftAccount` N
             .Build();
     }
     ```
+    
+3. Make sure all required claims are forwarded to Umbraco. If any of these are missing, you will likely get an error. Aside from user id, user name and user given name which should be forwarded automatically, the following additional claims are required by Umbraco to authenticate with Azure AD:
 
-3. Build and run the website. You can now login with your Azure AD credentials.
+   * Locality ("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/locality") - the user preferred culture
+   * Security stamp ("AspNet.Identity.SecurityStamp") - an ASP.NET Identity security stamp
+
+4. Build and run the website. You can now login with your Azure AD credentials.
 
     ![AD Login Screen](images/AD_Login.png)
 
